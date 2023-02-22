@@ -23,27 +23,33 @@ jobs:
             echo $(node --version)
             echo "NPM --version" 
             echo $(npm --version)
-            npm run frontend:install
-      # TODO: Install dependencies in the the backend API          
+            npm run frontend:install        
       - run:
           name: Install API Dependencies
           command: |
            echo "TODO: Install dependencies in the the backend API  "
-      # TODO: Lint the frontend
+           npm install api:install
       - run:
           name: Front-End Lint
           command: |
             echo "TODO: Lint the frontend"
-      # TODO: Build the frontend app
+            npm run frontend:lint
       - run:
           name: Front-End Build
           command: |
             echo "TODO: Build the frontend app"
-      # TODO: Build the backend API      
+            npm run frontend:build    
       - run:
           name: API Build
           command: |
             echo "TODO: Build the backend API"
+            npm run api:build
+      - run:
+          name: Test Front-End
+          command: |
+            CHROME_BIN=/usr/bin/google-chrome
+            echo "TODO: Test the frontend app"
+            npm run frontend:test
   # deploy step will run only after manual approval
   deploy:
     docker:
@@ -56,11 +62,26 @@ jobs:
       - aws-cli/setup
       - checkout
       - run:
+          name: set eb environment Variables and prepare for deploy
+          command: |
+            echo "TODO: Deploy App"
+            pip3 install --upgrade awscli
+            echo "TODO: set eb environment Variables"
+            cd ~/udagram/udagram-api
+            echo ${PORT}
+            eb setenv PORT=$PORT POSTGRES_USERNAME=$POSTGRES_USERNAME POSTGRES_PASSWORD=$POSTGRES_PASSWORD POSTGRES_DB=$POSTGRES_DB DB_PORT=$DB_PORT POSTGRES_HOST=$POSTGRES_HOST AWS_REGION=$AWS_REGION AWS_PROFILE=$AWS_PROFILE AWS_BUCKET=$AWS_BUCKET AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID JWT_SECRET=$JWT_SECRET URL=$URL 
+            cd ..
+      - run:
           name: Deploy App
-          # TODO: Install, build, deploy in both apps
+          #// TODO: Install, build, deploy in both apps
           command: |
             echo "# TODO: Install, build, deploy in both apps"
-            
+            npm run api:install
+            npm run api:build
+            npm run api:deploy
+            npm run frontend:install
+            npm run frontend:build
+            npm run frontend:deploy            
 workflows:
   udagram:
     jobs:
@@ -69,7 +90,7 @@ workflows:
           filters:
             branches:
               only:
-                - master
+                - main
           type: approval
           requires:
             - build

@@ -18,4 +18,6 @@ export const config = {
   jwt: {
     secret: process.env.JWT_SECRET,
   },
+  port: Number(process.env.PORT),
+  db_port: Number(process.env.DB_PORT),
 };
