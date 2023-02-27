@@ -1,6 +1,7 @@
 # Hosting a Full-Stack Application
 
-Saddly have a problem with IAM user credentials and contacting support to solve it
+Website (angular frontend): `http://udagram2023.s3-website-us-east-1.amazonaws.com/`
+API (node server): `http://udagram-api-dev2222.us-east-1.elasticbeanstalk.com/`
 
 ### **You can use you own project completed in previous courses or use the provided Udagram app for completing this final project.**
 
